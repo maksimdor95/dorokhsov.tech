@@ -36,8 +36,8 @@ export const profile = {
   location: "Москва",
   experience: "7+ лет",
   email: "dog_30@mail.ru",
-  phone: "+7 (916) 666-56-11",
-  phoneHref: "tel:+79166665611",
+  telegram: "Maksi_D",
+  telegramHref: "https://t.me/Maksi_D",
   github: "https://github.com/maksimdor95",
   behance: "https://www.behance.net/maximdorokhov",
   headline: [
@@ -50,7 +50,7 @@ export const profile = {
     "Запускаю и масштабирую B2B, B2B2C и B2E-продукты — от стратегии и гипотез до метрик и релизов.",
   about: [
     "Руковожу цифровыми продуктами: выстраиваю стратегию, клиентский путь и кросс-функциональные команды. Соединяю продукт, аналитику, UX и delivery в одном цикле — с фокусом на конверсию, метрики и time-to-market.",
-    "Параллельно создаю собственные проекты: LEO AI — карьерный AI-ассистент, UI/UX-кейсы на Behance, 3D-редактор DorDes.",
+    "Параллельно создаю собственные проекты: LEO AI — карьерный AI-ассистент, UI/UX-кейсы на Behance, 3D-редактор D&D.",
   ],
   focus: [
     "Product strategy & go-to-market",
@@ -120,11 +120,11 @@ export const projects: Project[] = [
   },
   {
     id: "dordes",
-    title: "DorDes",
+    title: "D&D",
     tags: ["3D", "INTERIOR", "WEB APP"],
     description:
       "Интерактивный 3D-редактор интерьера: план квартиры, мебель, свет и смета в браузере.",
-    imageLabel: "DorDes",
+    imageLabel: "D&D",
     imageTone: "linear-gradient(135deg, #f0f0f0 0%, #ccc4b9 50%, #8a8070 100%)",
   },
 ];

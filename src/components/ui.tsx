@@ -11,9 +11,17 @@ type PillButtonProps = {
   children: ReactNode;
   href?: string;
   onClick?: () => void;
+  type?: "button" | "submit";
+  disabled?: boolean;
 };
 
-export function PillButton({ children, href, onClick }: PillButtonProps) {
+export function PillButton({
+  children,
+  href,
+  onClick,
+  type = "button",
+  disabled,
+}: PillButtonProps) {
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement | null>(null);
 
   const onMove = (event: MouseEvent<HTMLElement>) => {
@@ -56,7 +64,8 @@ export function PillButton({ children, href, onClick }: PillButtonProps) {
     <button
       ref={ref as RefObject<HTMLButtonElement>}
       className={className}
-      type="button"
+      type={type}
+      disabled={disabled}
       onClick={onClick}
       onMouseMove={onMove}
       onMouseLeave={onLeave}

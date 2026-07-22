@@ -124,8 +124,9 @@ export const projects: Project[] = [
     tags: ["3D", "INTERIOR", "WEB APP"],
     description:
       "Интерактивный 3D-редактор интерьера: план квартиры, мебель, свет и смета в браузере.",
+    imageSrc: "/projects/d-and-d.png",
     imageLabel: "D&D",
-    imageTone: "linear-gradient(135deg, #f0f0f0 0%, #ccc4b9 50%, #8a8070 100%)",
+    imageTone: "linear-gradient(135deg, #111111 0%, #2a2a2a 50%, #1a1a1a 100%)",
   },
 ];
 

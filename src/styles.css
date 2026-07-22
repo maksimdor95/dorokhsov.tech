@@ -640,6 +640,42 @@
     line-height: 1.4;
   }
 
+  .contact-file {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    cursor: pointer;
+  }
+
+  .contact-file__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+  }
+
+  .contact-file__button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    border: 1px solid
+      color-mix(in srgb, var(--color-carbon-black) 45%, transparent);
+    color: var(--color-carbon-black);
+    text-transform: uppercase;
+    letter-spacing: -0.018em;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .contact-file:hover .contact-file__button,
+  .contact-file:focus-within .contact-file__button {
+    border-color: var(--color-ink);
+    background: color-mix(in srgb, var(--color-carbon-black) 4%, transparent);
+  }
+
   .hairline {
     border-bottom: 1px solid var(--color-carbon-black);
   }

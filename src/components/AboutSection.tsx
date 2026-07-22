@@ -36,41 +36,115 @@ export function AboutSection() {
 
 type FormStatus = "idle" | "sending" | "sent" | "error";
 
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const ACCEPTED_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "text/plain",
+];
+
+function buildRequestText(name: string, email: string, message: string) {
+  return `Заявка с dorokhov.tech\n\nИмя: ${name}\nEmail: ${email}\n\n${message}`;
+}
+
 export function ContactSection() {
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [errorText, setErrorText] = useState("");
+  const [fileName, setFileName] = useState("");
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
+    const name = String(data.get("name") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+    const file = data.get("attachment");
+
+    if (!name || !email || !message) {
+      setStatus("error");
+      setErrorText("Заполните все поля.");
+      return;
+    }
+
+    if (file instanceof File && file.size > 0) {
+      if (file.size > MAX_FILE_BYTES) {
+        setStatus("error");
+        setErrorText("Файл больше 5 МБ — сожмите или пришлите ссылку.");
+        return;
+      }
+      if (file.type && !ACCEPTED_TYPES.includes(file.type)) {
+        setStatus("error");
+        setErrorText("Формат не подходит. PDF, DOC/DOCX, XLS/XLSX, JPG, PNG.");
+        return;
+      }
+      if (!accessKey) {
+        setStatus("error");
+        setErrorText(
+          "Вложения пока недоступны. Напишите в Telegram и приложите файл там.",
+        );
+        return;
+      }
+    }
 
     setStatus("sending");
+    setErrorText("");
 
-    try {
-      const response = await fetch(
-        `https://formsubmit.co/ajax/${profile.email}`,
-        {
+    // С ключом Web3Forms — письмо уходит само, с вложением.
+    if (accessKey) {
+      try {
+        const payload = new FormData();
+        payload.append("access_key", accessKey);
+        payload.append("name", name);
+        payload.append("email", email);
+        payload.append("message", message);
+        payload.append("subject", `Заявка с dorokhov.tech — ${name}`);
+        payload.append("from_name", "dorokhov.tech");
+        if (file instanceof File && file.size > 0) {
+          payload.append("attachment", file, file.name);
+        }
+
+        const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            name: data.get("name"),
-            email: data.get("email"),
-            message: data.get("message"),
-            _subject: "Заявка с dorokhov.tech",
-            _template: "table",
-          }),
-        },
-      );
+          body: payload,
+        });
+        const result = (await response.json()) as {
+          success?: boolean;
+          message?: string;
+        };
 
-      if (!response.ok) throw new Error("submit failed");
-      setStatus("sent");
-      form.reset();
-    } catch {
-      setStatus("error");
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || "submit failed");
+        }
+
+        setStatus("sent");
+        setFileName("");
+        form.reset();
+        return;
+      } catch {
+        setStatus("error");
+        setErrorText("Не отправилось. Напишите в Telegram — или попробуйте ещё раз.");
+        return;
+      }
     }
+
+    // Без ключа — fallback через почтовый клиент (без вложений).
+    const text = buildRequestText(name, email, message);
+    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
+      `Заявка с dorokhov.tech — ${name}`,
+    )}&body=${encodeURIComponent(text)}`;
+    window.setTimeout(() => {
+      setStatus("sent");
+      setFileName("");
+      form.reset();
+    }, 200);
   }
 
   return (
@@ -127,7 +201,8 @@ export function ContactSection() {
           <p className="type-xs text-stone">Заявка</p>
           <h3 className="type-4xl mt-3 text-carbon-black">Напишите о задаче</h3>
           <p className="type-lg mt-4 max-w-md text-carbon-black">
-            Коротко опишите проект — письмо придёт мне, отвечу на ваш email.
+            Можно приложить бриф или документ. Письмо придёт мне на почту —
+            отвечу на ваш email.
           </p>
         </div>
 
@@ -168,18 +243,44 @@ export function ContactSection() {
             />
           </label>
 
+          <label className="contact-field">
+            <span className="type-xs text-stone">Вложение (опционально)</span>
+            <label className="contact-file">
+              <input
+                className="contact-file__input"
+                name="attachment"
+                type="file"
+                accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.webp,.txt"
+                onChange={(event) => {
+                  const next = event.target.files?.[0];
+                  setFileName(next ? next.name : "");
+                  setStatus("idle");
+                  setErrorText("");
+                }}
+              />
+              <span className="contact-file__button type-xs">
+                {fileName || "Прикрепить файл"}
+              </span>
+              <span className="type-xs text-stone">
+                PDF, DOC, XLS, изображение · до 5 МБ
+              </span>
+            </label>
+          </label>
+
           <div className="contact-form__actions">
             <PillButton type="submit" disabled={status === "sending"}>
               {status === "sending" ? "Отправляю…" : "Отправить заявку"}
             </PillButton>
             {status === "sent" && (
               <p className="type-xs text-carbon-black">
-                Отправлено. Скоро отвечу.
+                {accessKey
+                  ? "Отправлено. Скоро отвечу."
+                  : "Готово — подтвердите отправку в почтовом клиенте."}
               </p>
             )}
             {status === "error" && (
               <p className="type-xs text-carbon-black">
-                Не отправилось — напишите в{" "}
+                {errorText || "Что-то пошло не так."}{" "}
                 <a
                   className="underline"
                   href={profile.telegramHref}
@@ -188,7 +289,6 @@ export function ContactSection() {
                 >
                   Telegram
                 </a>
-                .
               </p>
             )}
           </div>

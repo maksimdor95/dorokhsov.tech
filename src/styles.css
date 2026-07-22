@@ -83,9 +83,9 @@
 @layer utilities {
   .type-5xl-2 {
     font-family: var(--font-founders-grotesk);
-    font-size: clamp(2rem, 6.2vw, var(--text-5xl-2));
+    font-size: clamp(1.95rem, 9vw, var(--text-5xl-2));
     font-weight: 300;
-    line-height: var(--leading-5xl-2);
+    line-height: 0.9;
     letter-spacing: -0.04em;
     text-transform: uppercase;
   }
@@ -98,9 +98,10 @@
 
   .hero-headline {
     letter-spacing: -0.035em;
-    padding-inline: 4px;
+    padding-inline: 2px;
     overflow-wrap: normal;
     word-break: normal;
+    gap: 0.08em;
   }
 
   .hero-headline-line {
@@ -328,28 +329,118 @@
     translate: 0 -50%;
   }
 
-  /* —— Variant B: cascading collage —— */
-  .hero-cascade {
+  /* —— Variant B: sparse rules + one large square —— */
+  .hero-square {
     position: absolute;
-    top: 4%;
-    right: 0;
-    bottom: 2%;
-    width: min(46vw, 540px);
+    top: 50%;
+    right: -10%;
+    width: min(52vw, 580px);
+    aspect-ratio: 1;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    animation: orbit-in 1.25s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
   }
 
-  .hero-cascade__slot {
+  .hero-square__ring {
     position: absolute;
+    inset: 0;
+    border: 1.5px solid
+      color-mix(in srgb, var(--color-carbon-black) 36%, transparent);
+  }
+
+  .hero-square__ring--outer {
+    animation: orbit-spin 55s linear infinite;
+  }
+
+  .hero-square__ring--mid {
+    inset: 10%;
+    border-width: 1px;
+    border-color: color-mix(in srgb, var(--color-carbon-black) 18%, transparent);
+    animation: orbit-breathe 9s ease-in-out infinite;
+  }
+
+  .hero-square__cross {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    z-index: 1;
+  }
+
+  .hero-square__cross::before,
+  .hero-square__cross::after {
+    content: "";
+    position: absolute;
+    background: color-mix(in srgb, var(--color-carbon-black) 45%, transparent);
+  }
+
+  .hero-square__cross::before {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    translate: -50% 0;
+  }
+
+  .hero-square__cross::after {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    translate: 0 -50%;
+  }
+
+  /* About: former hero cascade collage */
+  .about-cascade {
+    position: relative;
+    width: 100%;
+    min-height: 340px;
+    aspect-ratio: 5 / 4;
+    max-width: 520px;
+    margin-inline: auto;
+  }
+
+  .about-cascade__slot {
+    position: absolute;
+  }
+
+  .about-cascade.is-inview .about-cascade__slot {
     animation: cascade-float var(--float-dur) ease-in-out var(--float-delay)
       infinite;
   }
 
-  .hero-cascade__frame {
+  .about-cascade__frame {
     position: absolute;
     inset: 0;
+    opacity: 0;
+    color: color-mix(in srgb, var(--color-carbon-black) 46%, transparent);
+  }
+
+  .about-cascade__frame--square {
     border: 1.5px solid
       color-mix(in srgb, var(--color-carbon-black) 46%, transparent);
     background: color-mix(in srgb, var(--color-carbon-black) 2%, transparent);
-    opacity: 0;
+  }
+
+  .about-cascade__frame--circle {
+    border: 1.5px solid
+      color-mix(in srgb, var(--color-carbon-black) 46%, transparent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--color-carbon-black) 2%, transparent);
+  }
+
+  .about-cascade__frame--triangle {
+    border: none;
+    background: transparent;
+  }
+
+  .about-cascade__svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .about-cascade.is-inview .about-cascade__frame {
     animation: cascade-fall var(--duration) cubic-bezier(0.16, 0.92, 0.22, 1)
       forwards;
     animation-delay: calc(0.06s + var(--delay));
@@ -422,6 +513,69 @@
     }
   }
 
+  /* —— Variant C: sparse rules + one large triangle —— */
+  .hero-triangle {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    width: min(56vw, 620px);
+    aspect-ratio: 1;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    color: color-mix(in srgb, var(--color-carbon-black) 36%, transparent);
+    animation: orbit-in 1.25s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+  }
+
+  .hero-triangle__ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-triangle__ring--outer {
+    animation: orbit-spin 55s linear infinite;
+  }
+
+  .hero-triangle__ring--mid {
+    inset: 8%;
+    width: auto;
+    height: auto;
+    color: color-mix(in srgb, var(--color-carbon-black) 18%, transparent);
+    animation: orbit-breathe 9s ease-in-out infinite;
+  }
+
+  .hero-triangle__cross {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    z-index: 1;
+  }
+
+  .hero-triangle__cross::before,
+  .hero-triangle__cross::after {
+    content: "";
+    position: absolute;
+    background: color-mix(in srgb, var(--color-carbon-black) 45%, transparent);
+  }
+
+  .hero-triangle__cross::before {
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    translate: -50% 0;
+  }
+
+  .hero-triangle__cross::after {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    translate: 0 -50%;
+  }
+
   @keyframes vline-drift {
     0%,
     100% {
@@ -444,26 +598,79 @@
 
   .hero-line {
     display: block;
-    overflow: hidden;
+    overflow: visible;
   }
 
-  .hero-line__inner {
+  .hero-line--type {
+    display: grid;
+    white-space: nowrap;
+  }
+
+  .hero-line__ghost {
+    grid-area: 1 / 1;
+    visibility: hidden;
     display: block;
-    transform: translate3d(0, 110%, 0);
-    animation: line-up 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: calc(0.12s + var(--i, 0) * 0.1s);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  .hero-line__typed {
+    grid-area: 1 / 1;
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .hero-caret {
+    display: inline-block;
+    width: 0.065em;
+    height: 0.82em;
+    margin-left: 0.04em;
+    vertical-align: -0.02em;
+    background: currentColor;
+    transform-origin: center bottom;
+    animation: caret-blink 0.85s steps(1, end) infinite;
+  }
+
+  .hero-caret.is-falling {
+    animation: caret-fall 0.7s cubic-bezier(0.4, 0.05, 0.7, 0.2) forwards;
+  }
+
+  .hero-fade-pending {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
   }
 
   .hero-fade {
     opacity: 0;
     transform: translate3d(0, 20px, 0);
     animation: rise-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    animation-delay: calc(0.55s + var(--i, 0) * 0.08s);
+    animation-delay: calc(0.08s + var(--i, 0) * 0.1s);
   }
 
-  @keyframes line-up {
-    to {
-      transform: translate3d(0, 0, 0);
+  @keyframes caret-blink {
+    0%,
+    45% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes caret-fall {
+    0% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    18% {
+      opacity: 1;
+      transform: translate3d(2px, 4px, 0) rotate(8deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(14px, 92px, 0) rotate(48deg);
     }
   }
 
@@ -475,6 +682,10 @@
   }
 
   @media (max-width: 900px) {
+    .hero-headline {
+      padding-inline: 0;
+    }
+
     .hero-stage {
       min-height: clamp(440px, 70vh, 640px);
     }
@@ -503,13 +714,27 @@
       opacity: 0.55;
     }
 
-    .hero-cascade {
+    .hero-square {
       top: auto;
-      bottom: 0;
-      right: -8%;
-      width: min(70vw, 320px);
-      height: 38%;
+      bottom: -14%;
+      right: -22%;
+      width: min(82vw, 400px);
+      translate: 0 0;
       opacity: 0.55;
+    }
+
+    .hero-triangle {
+      top: auto;
+      bottom: -12%;
+      right: -22%;
+      width: min(88vw, 420px);
+      translate: 0 0;
+      opacity: 0.55;
+    }
+
+    .about-cascade {
+      min-height: 280px;
+      max-width: 420px;
     }
   }
 
@@ -712,8 +937,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-line__inner,
     .hero-fade,
+    .hero-fade-pending,
+    .hero-caret,
     .reveal,
     .project-image--zoom img,
     .pill-button,
@@ -722,22 +948,32 @@
     .hero-orbit,
     .hero-orbit__ring--outer,
     .hero-orbit__ring--mid,
+    .hero-square,
+    .hero-square__ring--outer,
+    .hero-square__ring--mid,
+    .hero-triangle,
+    .hero-triangle__ring--outer,
+    .hero-triangle__ring--mid,
     .hero-rules__vline,
-    .hero-cascade__slot,
-    .hero-cascade__frame {
+    .about-cascade__slot,
+    .about-cascade__frame {
       animation: none !important;
       transition: none !important;
       opacity: 1 !important;
     }
 
-    .hero-line__inner,
+    .hero-caret {
+      display: none !important;
+    }
+
     .hero-fade,
+    .hero-fade-pending,
     .reveal,
     .project-image--zoom img,
     .pill-button,
     .pill-button::before,
-    .hero-cascade__frame,
-    .hero-cascade__slot {
+    .about-cascade__frame,
+    .about-cascade__slot {
       transform: none !important;
     }
   }

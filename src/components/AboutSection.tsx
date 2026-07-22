@@ -1,34 +1,21 @@
 import { useState, type FormEvent } from "react";
 import { profile } from "../data";
+import { AboutCascade } from "./AboutCascade";
 import { PillButton, SectionHeading } from "./ui";
 
 export function AboutSection() {
   return (
     <section id="about" className="page-shell section-gap">
-      <SectionHeading eyebrow={profile.experience}>About</SectionHeading>
-      <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="space-y-6">
+      <SectionHeading eyebrow="Как работаю">About</SectionHeading>
+      <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="max-w-2xl space-y-6">
           {profile.about.map((paragraph) => (
             <p key={paragraph} className="type-lg text-carbon-black">
               {paragraph}
             </p>
           ))}
         </div>
-
-        <aside className="bg-parchment p-6 md:p-8">
-          <p className="type-xs text-stone">Focus</p>
-          <ul className="mt-5 space-y-4">
-            {profile.focus.map((item) => (
-              <li key={item} className="type-lg text-carbon-black">
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <PillButton href={profile.behance}>Behance</PillButton>
-            <PillButton href={profile.github}>GitHub</PillButton>
-          </div>
-        </aside>
+        <AboutCascade />
       </div>
     </section>
   );
@@ -243,7 +230,7 @@ export function ContactSection() {
             />
           </label>
 
-          <label className="contact-field">
+          <div className="contact-field">
             <span className="type-xs text-stone">Вложение (опционально)</span>
             <label className="contact-file">
               <input
@@ -265,7 +252,7 @@ export function ContactSection() {
                 PDF, DOC, XLS, изображение · до 5 МБ
               </span>
             </label>
-          </label>
+          </div>
 
           <div className="contact-form__actions">
             <PillButton type="submit" disabled={status === "sending"}>

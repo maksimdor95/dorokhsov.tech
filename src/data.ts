@@ -15,8 +15,6 @@ export type Service = {
   title: string;
   tags: string[];
   description: string;
-  price: string;
-  timeline: string;
 };
 
 export type PricingTier = {
@@ -32,7 +30,7 @@ export const profile = {
   fullName: "Дорохов Максим",
   shortName: "Dorokhov",
   title: "Руководитель направления / Product Owner",
-  role: "Product Owner · FinTech · HRTech",
+  role: "Product systems · launch · growth",
   location: "Москва",
   experience: "7+ лет",
   email: "dog_30@mail.ru",
@@ -41,24 +39,16 @@ export const profile = {
   github: "https://github.com/maksimdor95",
   behance: "https://www.behance.net/maximdorokhov",
   headline: [
-    "Запускаю продукты",
-    "от идеи до",
-    "масштабирования",
+    "Делаю цифровые",
+    "продукты",
+    "для роста бизнеса",
   ],
-  tagline: ["Product owner · FinTech · HRTech", "UI/UX"],
+  tagline: ["Sites · bots · SaaS · AI", "Launch · growth"],
   intro:
-    "Запускаю и масштабирую B2B, B2B2C и B2E-продукты — от стратегии и гипотез до метрик и релизов.",
+    "Сайты, Telegram-боты и IT-продукты под запуск, автоматизацию и рост.",
   about: [
-    "Руковожу цифровыми продуктами: выстраиваю стратегию, клиентский путь и кросс-функциональные команды. Соединяю продукт, аналитику, UX и delivery в одном цикле — с фокусом на конверсию, метрики и time-to-market.",
-    "Параллельно создаю собственные проекты: LEO AI — карьерный AI-ассистент, UI/UX-кейсы на Behance, 3D-редактор D&D.",
-  ],
-  focus: [
-    "Product strategy & go-to-market",
-    "Customer journey & conversion",
-    "Кросс-функциональные команды 12–16+",
-    "UX/UI, Figma, прототипирование",
-    "Agile, backlog, метрики, CustDev",
-    "MVP и AI-продукты",
+    "Работаю на стыке продукта, интерфейса и новых технологий. Сначала формулирую оффер и путь клиента, потом собираю структуру, визуал и логику, чтобы проект было легко показать рынку и развивать дальше.",
+    "Делаю сайты под запуск, Telegram-боты, MVP и IT-продукты для сервисов, экспертов и SaaS. Важны ясность, доверие и следующий шаг для клиента.",
   ],
 };
 
@@ -133,30 +123,24 @@ export const projects: Project[] = [
 export const services: Service[] = [
   {
     id: "product",
-    title: "Продуктовый консалтинг",
-    tags: ["STRATEGY", "ROADMAP", "METRICS"],
+    title: "Сайт под запуск",
+    tags: ["OFFER", "TRUST", "WEB"],
     description:
-      "Аудит продукта, приоритизация бэклога, CJM, гипотезы и метрики. Для FinTech, HRTech и B2B-сервисов.",
-    price: "от 8 000 ₽ / час",
-    timeline: "по запросу",
+      "Лендинг, визитка или продуктовый сайт, который понятно объясняет оффер и ведёт к лиду.",
   },
   {
     id: "ux",
-    title: "UX/UI и прототипирование",
-    tags: ["FIGMA", "RESEARCH", "HANDOFF"],
+    title: "Telegram-бот или агент в процесс",
+    tags: ["BOT", "AGENT", "CRM"],
     description:
-      "Исследования, CJM, прототипы и UI для веба и мобайла. От концепта до передачи в разработку.",
-    price: "от 75 000 ₽",
-    timeline: "10–21 день",
+      "Закрывает рутину в воронке: заявки, запись, ответы клиенту, уведомления команде и передача в CRM. От простого сценария до агента, который сам ведёт диалог.",
   },
   {
     id: "audit",
-    title: "Продуктовый аудит",
-    tags: ["CJM", "BACKLOG", "ANALYTICS"],
+    title: "От MVP до IT-продукта",
+    tags: ["MVP", "SaaS", "PRODUCT"],
     description:
-      "Разбор текущего состояния продукта: воронка, метрики, UX-узкие места и рекомендации по приоритетам.",
-    price: "от 45 000 ₽",
-    timeline: "5–7 дней",
+      "Собираю первый рабочий продукт: от гипотезы и сценариев до интерфейса, который можно показать рынку и развивать дальше.",
   },
 ];
 
@@ -166,7 +150,7 @@ export const pricingTiers: PricingTier[] = [
     name: "Визитка",
     price: "от 45 000 ₽",
     description:
-      "Одностраничный сайт для эксперта или небольшого проекта. Структура, тексты, адаптив.",
+      "Быстрый старт для эксперта, сервиса или личного бренда: упаковать оффер и привести к контакту.",
     includes: [
       "1 страница, до 5 секций",
       "Адаптивная вёрстка",
@@ -179,7 +163,7 @@ export const pricingTiers: PricingTier[] = [
     name: "Telegram-бот",
     price: "от 55 000 ₽",
     description:
-      "Бот под задачу: лиды, запись, FAQ, уведомления или мини-продукт внутри Telegram.",
+      "Когда нужна не просто кнопка в Telegram, а рабочий процесс: заявки, запись, ответы, уведомления или агент, который ведёт диалог.",
     includes: [
       "Сценарии и логика диалога",
       "Админ / Google Sheets / CRM",
@@ -193,7 +177,7 @@ export const pricingTiers: PricingTier[] = [
     name: "Лендинг",
     price: "от 75 000 ₽",
     description:
-      "Editorial-лендинг с индивидуальным дизайном: типографика, сетка, портфолио, анимации.",
+      "Запуск продукта, услуги или кейса с более сильной подачей, визуалом и акцентом на доверие.",
     includes: [
       "Кастомный UI",
       "До 6 секций",
@@ -207,7 +191,7 @@ export const pricingTiers: PricingTier[] = [
     name: "Продуктовый сайт",
     price: "от 120 000 ₽",
     description:
-      "Многостраничный сайт для SaaS, AI-сервиса или MVP — со сценариями и интеграциями.",
+      "Основа для SaaS, AI-сервиса или MVP: несколько сценариев, страницы, интеграции и запас для роста.",
     includes: [
       "UX-прототип",
       "Дизайн-система",
@@ -221,7 +205,6 @@ export const pricingTiers: PricingTier[] = [
 export const navItems = [
   { id: "work", label: "Work" },
   { id: "services", label: "Services" },
-  { id: "pricing", label: "Pricing" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ];

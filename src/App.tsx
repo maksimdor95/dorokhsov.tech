@@ -5,7 +5,7 @@ import {
 } from "./data";
 import { AboutSection, ContactSection, Footer } from "./components/AboutSection";
 import { Header, Hero } from "./components/Header";
-import { PricingSection, ServicesSection } from "./components/ServicesSection";
+import { ServicesSection } from "./components/ServicesSection";
 import { WorkSection } from "./components/WorkSection";
 
 export default function App() {
@@ -15,8 +15,7 @@ export default function App() {
       <main>
         <Hero />
         <WorkSection projects={projects} />
-        <ServicesSection services={services} />
-        <PricingSection tiers={pricingTiers} />
+        <ServicesSection services={services} tiers={pricingTiers} />
         <AboutSection />
         <ContactSection />
       </main>

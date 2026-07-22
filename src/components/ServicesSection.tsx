@@ -3,7 +3,7 @@ import { MetaTags, SectionHeading } from "./ui";
 
 function ServiceRow({ service }: { service: Service }) {
   return (
-    <div className="hairline grid gap-4 py-5 md:grid-cols-[1.2fr_1fr_auto_auto] md:items-center md:gap-6">
+    <div className="hairline grid gap-3 py-5 md:grid-cols-[1.2fr_1fr] md:items-center md:gap-6">
       <div>
         <p className="type-xs text-carbon-black">{service.title}</p>
         <p className="type-lg mt-2 max-w-xl text-carbon-black">
@@ -11,8 +11,6 @@ function ServiceRow({ service }: { service: Service }) {
         </p>
       </div>
       <MetaTags tags={service.tags} />
-      <p className="type-xs text-carbon-black">{service.price}</p>
-      <p className="type-xs text-stone">{service.timeline}</p>
     </div>
   );
 }
@@ -34,39 +32,41 @@ function PricingCard({ tier }: { tier: PricingTier }) {
   );
 }
 
-export function ServicesSection({ services }: { services: Service[] }) {
+export function ServicesSection({
+  services,
+  tiers,
+}: {
+  services: Service[];
+  tiers: PricingTier[];
+}) {
   return (
     <section id="services" className="page-shell section-gap">
-      <SectionHeading eyebrow="Консалтинг и дизайн">
+      <SectionHeading eyebrow="Что можно запустить">
         Services
       </SectionHeading>
-      <p className="type-lg -mt-10 mb-20 max-w-2xl text-carbon-black">
-        Продуктовая экспертиза, UX/UI и аудит — почасовая или проектная работа.
-        Сайты и Telegram-боты — в блоке Pricing.
+      <p className="type-lg -mt-10 mb-16 max-w-3xl text-carbon-black">
+        Не отдельные часы дизайна, а готовый цифровой продукт под задачу
+        бизнеса: привлечь клиента, автоматизировать путь или быстро вывести
+        идею на рынок.
       </p>
+
       <div>
         {services.map((service) => (
           <ServiceRow key={service.id} service={service} />
         ))}
       </div>
-    </section>
-  );
-}
 
-export function PricingSection({ tiers }: { tiers: PricingTier[] }) {
-  return (
-    <section id="pricing" className="page-shell section-gap">
-      <SectionHeading eyebrow="Сайты и боты">
-        Pricing
-      </SectionHeading>
-      <p className="type-lg -mt-10 mb-20 max-w-3xl text-carbon-black">
-        Сайты под ключ и Telegram-боты. Фиксированный объём, понятные сроки и
-        продуктовый подход.
-      </p>
-      <div className="grid gap-[29px] md:grid-cols-2 xl:grid-cols-4">
-        {tiers.map((tier) => (
-          <PricingCard key={tier.id} tier={tier} />
-        ))}
+      <div id="pricing" className="mt-20 scroll-mt-28">
+        <p className="type-xs text-stone">С чего начать</p>
+        <p className="type-lg mt-4 max-w-3xl text-carbon-black">
+          Если задача уже понятна, можно зайти через готовый формат. Если нет
+          точного пакета, собираю решение под продукт, сценарий и этап запуска.
+        </p>
+        <div className="mt-8 grid gap-[29px] md:grid-cols-2 xl:grid-cols-4">
+          {tiers.map((tier) => (
+            <PricingCard key={tier.id} tier={tier} />
+          ))}
+        </div>
       </div>
     </section>
   );

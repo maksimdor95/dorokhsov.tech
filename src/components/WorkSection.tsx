@@ -81,7 +81,7 @@ export function WorkSection({ projects }: { projects: Project[] }) {
   return (
     <section id="work" className="page-shell section-gap">
       <Reveal>
-        <SectionHeading eyebrow="Selected Projects">Work</SectionHeading>
+        <SectionHeading eyebrow="Избранные проекты">Work</SectionHeading>
       </Reveal>
       <div className="grid items-stretch gap-x-[29px] gap-y-20 md:grid-cols-2">
         {projects.map((project, index) => (
